@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.fiap.financeflix.screens.InitialScreen
 import com.fiap.financeflix.ui.theme.FinanceFlixTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,15 +24,7 @@ class MainActivity : ComponentActivity() {
 					color = MaterialTheme.colorScheme.background
 				) {
 
-					//Processo para realizar merge
-
-					//1 - clonar projeto para uma pasta no pc
-					//2 - Mudar para branch de cada um nome remoto
-					//3 - Fazer o que tem que ser feito
-					//4 - Ao finalizar, fazer commit e push
-					//5 - Em seguida fazer merge para master levando as ultimas configs da sua branch
-
-					//
+					InitialScreen()
 
 				}
 			}
