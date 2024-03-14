@@ -12,7 +12,7 @@
     <string name="text_username">FinanceFlix</string>
     <string name="text_forgot_password">Esqueceu sua senha?</string>
     <string name="text_ask_account">Esqueceu sua senha?</string>
-    <string name="text_register_now">Registrar agora</string>
+    <string name="text_register_now">Ainda não tem uma conta? Registrar agora</string>
     <string name="btn_loginScreen">Entrar</string>
 
     <!--Página Inicial-->

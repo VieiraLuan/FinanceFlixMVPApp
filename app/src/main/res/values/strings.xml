@@ -11,7 +11,7 @@
     <string name="text_username">FinanceFlix</string>
     <string name="text_forgot_password">Forgot your password?</string>
     <string name="text_ask_account">Forgot your password?</string>
-    <string name="text_register_now">Register now</string>
+    <string name="text_register_now">Don´t have an account? Register now</string>
     <string name="btn_loginScreen">Log in</string>
 
     <!--Home-->
