@@ -1,8 +1,8 @@
 package com.fiap.financeflix.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,15 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,18 +27,36 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.fiap.financeflix.R
+import com.fiap.financeflix.components.InputTextComponent
+import com.fiap.financeflix.components.TextErrorComponent
 import com.fiap.financeflix.utils.getGradientBackground
+import com.fiap.financeflix.viewmodel.LoginScreenViewModel
 
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(loginScreenViewModel: LoginScreenViewModel, navController: NavController) {
 
-//	Screen
+
+	//Observers
+	val emailState by loginScreenViewModel.email.observeAsState(initial = "")
+	val passwordState by loginScreenViewModel.password.observeAsState(initial = "")
+
+	//Validation
+	var emailError by remember { mutableStateOf(false) }
+	var passwordError by remember { mutableStateOf(false) }
+	var loginError by remember { mutableStateOf(false) }
+
+
+	//Validation Message
+
+	var emailMessageError by remember { mutableStateOf("") }
+	var passwordMessageError by remember { mutableStateOf("") }
+	var loginMessageError by remember { mutableStateOf("") }
+	//	Screen
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -81,49 +96,39 @@ fun LoginScreen() {
 				.padding(horizontal = 50.dp)
 		) {
 
-			//Componentizar os outlinedTextField
-			OutlinedTextField(
-				value = "",
-				onValueChange = {
 
+			InputTextComponent(
+				value = emailState,
+				label = stringResource(id = R.string.text_label_email),
+				placeholder = stringResource(id = R.string.text_placeholder_email),
+				keyboardType = KeyboardType.Email,
+				updateValue = {
+					loginScreenViewModel.onEmailChanged(it)
 				},
-				modifier = Modifier.fillMaxWidth(),
-				placeholder = {
-					Text(
-						text = "Informe sua altura em cm",
-						color = Color.White
-					)
-				},
-				colors = OutlinedTextFieldDefaults.colors(
-					unfocusedBorderColor = colorResource(id = R.color.white),
-					focusedBorderColor = colorResource(id = R.color.white)
-				),
-				shape = RoundedCornerShape(16.dp),
-				keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+				validation = emailError,
+				messageValidation = emailMessageError,
+				passwordField = false
 			)
 
 			Spacer(modifier = Modifier.padding(20.dp))
 
-			OutlinedTextField(
-				value = "",
-				onValueChange = {
-
+			InputTextComponent(
+				value = passwordState,
+				label = stringResource(id = R.string.text_label_password),
+				placeholder = stringResource(id = R.string.text_placeholder_email),
+				keyboardType = KeyboardType.Password,
+				updateValue = {
+					loginScreenViewModel.onPasswordChanged(it)
 				},
-				modifier = Modifier.fillMaxWidth(),
-				placeholder = {
-					Text(
-						text = "Informe sua altura em cm",
-						color = Color.White
-					)
-				},
-				colors = OutlinedTextFieldDefaults.colors(
-					unfocusedBorderColor = colorResource(id = R.color.white),
-					focusedBorderColor = colorResource(id = R.color.white),
+				validation = passwordError,
+				messageValidation = passwordMessageError,
+				passwordField = true
 
-					),
-				shape = RoundedCornerShape(16.dp),
-				keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
 			)
+
+			if (loginError) {
+				TextErrorComponent(messageError = loginMessageError)
+			}
 
 			Spacer(modifier = Modifier.padding(5.dp))
 
@@ -133,6 +138,7 @@ fun LoginScreen() {
 				horizontalAlignment = Alignment.CenterHorizontally,
 				verticalArrangement = Arrangement.Center
 			) {
+
 				Text(
 					color = colorResource(id = R.color.white),
 					fontSize = 20.sp,
@@ -140,6 +146,8 @@ fun LoginScreen() {
 					textAlign = TextAlign.Center,
 					text = stringResource(id = R.string.text_forgot_password)
 				)
+
+
 			}
 
 			Spacer(modifier = Modifier.padding(50.dp))
@@ -154,7 +162,35 @@ fun LoginScreen() {
 
 				Button(
 					onClick = {
-//					navController.navigate("login")
+						try {
+							if (emailState.isNotEmpty() && passwordState.isNotEmpty()) {
+								loginScreenViewModel.login(
+									emailState,
+									passwordState
+								) { loginSuccess ->
+									if (loginSuccess) {
+
+										navController.navigate("home")
+
+
+									} else {
+										loginError = true
+										loginMessageError = "Problema ao autenticar usuário"
+									}
+								}
+							} else {
+								if (emailState.isEmpty()) {
+									emailError = true
+								}
+								if (passwordState.isEmpty()) {
+									passwordError = true
+								}
+							}
+
+						} catch (e: Exception) {
+							Log.e("ERRO TELA LOGIN", "${e.message}")
+						}
+
 					},
 					modifier = Modifier.fillMaxWidth(),
 					shape = RoundedCornerShape(30.dp),
@@ -187,72 +223,5 @@ fun LoginScreen() {
 
 
 	}
-
-
-//	Box(
-//		modifier = Modifier
-//			.fillMaxSize()
-//			.background(getGradientBackground())
-//	) {
-//
-//
-//		Card(
-//			modifier = Modifier
-//				.fillMaxSize()
-//				.background(getGradientBackground())
-//		) {
-//
-//			Column(
-//
-//				horizontalAlignment = Alignment.Start,
-//				verticalArrangement = Arrangement.Center
-//			) {
-//
-//				Text(
-//					color = colorResource(id = R.color.white),
-//					fontSize = 50.sp,
-//					fontWeight = FontWeight.Medium,
-//					textAlign = TextAlign.Center,
-//					text = stringResource(id = R.string.btn_loginScreen)
-//				)
-//
-//
-//				Spacer(modifier = Modifier.padding(20.dp))
-//
-//				OutlinedTextField(
-//					value = "",
-//					onValueChange = {
-//
-//					},
-//					modifier = Modifier.fillMaxWidth(),
-//					placeholder = {
-//						Text(text = "Informe sua altura em cm")
-//					},
-//					colors = OutlinedTextFieldDefaults.colors(
-//						unfocusedBorderColor = colorResource(id = R.color.background_color),
-//						focusedBorderColor = colorResource(id = R.color.background_color)
-//					),
-//					shape = RoundedCornerShape(16.dp),
-//					keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
-//				)
-//			}
-//
-//		}
-//
-//
-//	}
-
-	var emailState by remember { mutableStateOf("") }
-	var passwordState by remember { mutableStateOf("") }
-
-	//Implementar a tela de login utilizando ás variaveis de estado acima, acionando API
-
-
 }
 
-
-@Preview
-@Composable
-fun LoginScreenPreview() {
-	LoginScreen()
-}

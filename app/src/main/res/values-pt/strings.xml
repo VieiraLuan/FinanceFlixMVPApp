@@ -9,11 +9,16 @@
     <string name="btn_login">Entrar</string>
 
     <!--Login-->
-    <string name="text_username">FinanceFlix</string>
+    <string name="text_label_email"> Email</string>
+    <string name="text_placeholder_email"> Por favor, informe o seu email</string>
+    <string name="text_label_password"> Senha </string>
+    <string name="text_placeholder_password"> Por favor, informe a sua senha</string>
+
     <string name="text_forgot_password">Esqueceu sua senha?</string>
     <string name="text_ask_account">Esqueceu sua senha?</string>
     <string name="text_register_now">Ainda não tem uma conta? Registrar agora</string>
     <string name="btn_loginScreen">Entrar</string>
+
 
     <!--Página Inicial-->
     <string name="text_main">O que você deseja aprender?</string>
@@ -23,6 +28,8 @@
 
     <!--Player de Vídeo-->
 
+    <!--Validation-->
+    <string name="mandatory_field_validation"> Campo obrigatório </string>
 
 
 </resources>

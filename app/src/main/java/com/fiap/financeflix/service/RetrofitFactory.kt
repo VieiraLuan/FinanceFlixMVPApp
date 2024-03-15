@@ -1,14 +1,16 @@
 package com.fiap.financeflix.service
 
+import androidx.compose.ui.res.stringResource
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitFactory {
 
-	private val baseUrl: String = "" //Definir base url do Azure
+	private val baseUrlDev: String = "https://financeflix-dev.azurewebsites.net/api/"
+//	private val baseUrl: String = "https://financeflix.azurewebsites.net/api/"
 
 	private val retrofitFactory =
-		Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
+		Retrofit.Builder().baseUrl(baseUrlDev).addConverterFactory(GsonConverterFactory.create())
 			.build()
 
 

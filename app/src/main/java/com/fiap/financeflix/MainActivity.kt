@@ -17,7 +17,9 @@ import com.fiap.financeflix.screens.HomeScreen
 import com.fiap.financeflix.screens.InitialScreen
 import com.fiap.financeflix.screens.LoginScreen
 import com.fiap.financeflix.screens.VideoDetailScren
+import com.fiap.financeflix.service.AuthService
 import com.fiap.financeflix.ui.theme.FinanceFlixTheme
+import com.fiap.financeflix.viewmodel.LoginScreenViewModel
 
 class MainActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +39,7 @@ class MainActivity : ComponentActivity() {
 					{
 
 						composable(route = "initial") { InitialScreen(navController) }
-						composable(route = "login") { LoginScreen() }
+						composable(route = "login") { LoginScreen(loginScreenViewModel = LoginScreenViewModel(), navController) }
 						composable(route = "home") { HomeScreen() }
 						composable(route = "videoDetails") { VideoDetailScren() }
 						composable(route = "player") { VideoDetailScren() }

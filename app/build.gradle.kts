@@ -68,12 +68,15 @@ dependencies {
 	debugImplementation("androidx.compose.ui:ui-test-manifest")
 
 
-	//Implementing Retrofit
+	//Implementing Retrofit for API Requests
 	implementation("com.squareup.retrofit2:retrofit:2.9.0")
 	implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
 	// Navigation
 	implementation ("androidx.navigation:navigation-compose:2.7.7")
+
+	//Live Data for ViewModels
+	implementation("androidx.compose.runtime:runtime-livedata:1.6.2")
 
 
 }
