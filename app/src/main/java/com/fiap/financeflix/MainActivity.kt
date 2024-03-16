@@ -1,5 +1,6 @@
 package com.fiap.financeflix
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -33,13 +34,20 @@ class MainActivity : ComponentActivity() {
 				) {
 					//Routes
 					val navController = rememberNavController()
+					val context = this
 
 					//Main Route
 					NavHost(navController = navController, startDestination = "initial")
 					{
 
 						composable(route = "initial") { InitialScreen(navController) }
-						composable(route = "login") { LoginScreen(loginScreenViewModel = LoginScreenViewModel(), navController) }
+						composable(route = "login") {
+							LoginScreen(
+								loginScreenViewModel = LoginScreenViewModel(
+									context
+								), navController
+							)
+						}
 						composable(route = "home") { HomeScreen() }
 						composable(route = "videoDetails") { VideoDetailScren() }
 						composable(route = "player") { VideoDetailScren() }

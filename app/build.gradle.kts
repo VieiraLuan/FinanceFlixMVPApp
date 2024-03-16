@@ -72,11 +72,17 @@ dependencies {
 	implementation("com.squareup.retrofit2:retrofit:2.9.0")
 	implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+	//Take Care with this
+	implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
 	// Navigation
 	implementation ("androidx.navigation:navigation-compose:2.7.7")
 
 	//Live Data for ViewModels
 	implementation("androidx.compose.runtime:runtime-livedata:1.6.2")
+//
+//	//API Token
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
 
 }

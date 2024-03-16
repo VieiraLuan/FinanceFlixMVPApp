@@ -33,8 +33,10 @@ import androidx.navigation.NavController
 import com.fiap.financeflix.R
 import com.fiap.financeflix.components.InputTextComponent
 import com.fiap.financeflix.components.TextErrorComponent
+import com.fiap.financeflix.model.LoginResult
 import com.fiap.financeflix.utils.getGradientBackground
 import com.fiap.financeflix.viewmodel.LoginScreenViewModel
+import com.google.gson.JsonParser
 
 
 @Composable
@@ -168,14 +170,16 @@ fun LoginScreen(loginScreenViewModel: LoginScreenViewModel, navController: NavCo
 									emailState,
 									passwordState
 								) { loginSuccess ->
-									if (loginSuccess) {
+									if (loginSuccess.success) {
 
 										navController.navigate("home")
 
 
 									} else {
 										loginError = true
-										loginMessageError = "Problema ao autenticar usuário"
+
+
+										loginMessageError = "Usuário ou senha inválidos"
 									}
 								}
 							} else {
@@ -188,7 +192,7 @@ fun LoginScreen(loginScreenViewModel: LoginScreenViewModel, navController: NavCo
 							}
 
 						} catch (e: Exception) {
-							Log.e("ERRO TELA LOGIN", "${e.message}")
+							Log.e("ERRO NA TELA LOGIN", "${e.message}")
 						}
 
 					},
