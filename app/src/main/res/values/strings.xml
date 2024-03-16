@@ -21,7 +21,7 @@
 
     <!--Home-->
     <string name="text_main">What do you want to learn?</string>
-    <string name="text_find_videos">Find courses...</string>
+    <string name="text_find_courses">Find courses...</string>
 
     <!--Video Details-->
 

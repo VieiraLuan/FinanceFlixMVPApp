@@ -26,7 +26,7 @@ class LoginScreenViewModel(private val context: Context) : ViewModel() {
 
 	private val _email = MutableLiveData<String>()
 
-	val email: LiveData<String> = _email
+	var email: LiveData<String> = _email
 
 	private val _password = MutableLiveData<String>()
 
@@ -76,7 +76,6 @@ class LoginScreenViewModel(private val context: Context) : ViewModel() {
 
 							Log.i("API_SUCESS", message ?: "Response Body is Null")
 							tokenManager.getToken()?.let { Log.i("TOKEN_SAVED", it) }
-
 
 
 						} else {

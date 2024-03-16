@@ -22,7 +22,7 @@
 
     <!--Página Inicial-->
     <string name="text_main">O que você deseja aprender?</string>
-    <string name="text_find_videos">Encontrar cursos...</string>
+    <string name="text_find_courses">Encontrar cursos...</string>
 
     <!--Detalhes do Vídeo-->
 

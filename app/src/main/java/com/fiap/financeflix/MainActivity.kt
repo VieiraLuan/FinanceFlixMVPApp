@@ -20,6 +20,7 @@ import com.fiap.financeflix.screens.LoginScreen
 import com.fiap.financeflix.screens.VideoDetailScren
 import com.fiap.financeflix.service.AuthService
 import com.fiap.financeflix.ui.theme.FinanceFlixTheme
+import com.fiap.financeflix.viewmodel.HomeScreenViewModel
 import com.fiap.financeflix.viewmodel.LoginScreenViewModel
 
 class MainActivity : ComponentActivity() {
@@ -37,7 +38,7 @@ class MainActivity : ComponentActivity() {
 					val context = this
 
 					//Main Route
-					NavHost(navController = navController, startDestination = "initial")
+					NavHost(navController = navController, startDestination = "home")
 					{
 
 						composable(route = "initial") { InitialScreen(navController) }
@@ -48,7 +49,7 @@ class MainActivity : ComponentActivity() {
 								), navController
 							)
 						}
-						composable(route = "home") { HomeScreen() }
+						composable(route = "home") { HomeScreen(homeScreenViewModel = HomeScreenViewModel()) }
 						composable(route = "videoDetails") { VideoDetailScren() }
 						composable(route = "player") { VideoDetailScren() }
 
