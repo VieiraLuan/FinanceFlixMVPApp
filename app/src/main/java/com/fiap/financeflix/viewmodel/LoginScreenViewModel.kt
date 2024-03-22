@@ -46,6 +46,7 @@ class LoginScreenViewModel(private val context: Context) : ViewModel() {
 	//	Methods
 
 	fun login(email: String, password: String, callback: (LoginResult) -> Unit) {
+
 		val userCredentials = Login(email, password)
 		Log.i("Dados", "$email e $password")
 
@@ -53,8 +54,8 @@ class LoginScreenViewModel(private val context: Context) : ViewModel() {
 
 			val body = Gson().toJson(userCredentials)
 				.toRequestBody("application/json; charset=UTF-8".toMediaType())
-
-			RetrofitFactory().getAuthService().postLogin(body)
+			//Contexto
+			RetrofitFactory(context).getAuthService().postLogin(body)
 				.enqueue(object : Callback<ResponseBody> {
 					override fun onResponse(
 						call: Call<ResponseBody>,

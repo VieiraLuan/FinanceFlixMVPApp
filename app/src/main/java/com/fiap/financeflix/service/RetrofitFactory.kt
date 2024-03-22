@@ -1,5 +1,6 @@
 package com.fiap.financeflix.service
 
+import TokenManager
 import android.content.Context
 import androidx.compose.ui.res.stringResource
 import com.google.gson.Gson
@@ -10,24 +11,38 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import okhttp3.logging.HttpLoggingInterceptor
 
-class RetrofitFactory {
+class RetrofitFactory(private val context: Context) {
 
-	
+	private val tokenManager = TokenManager(context)
+
 	val baseUrl: String = "https://financeflix-dev.azurewebsites.net/"
-//	private val baseUrl: String = "https://financeflix.azurewebsites.net/api/"
 
-	fun client() = OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
-		.readTimeout(30, TimeUnit.SECONDS)
-		.addInterceptor(HttpLoggingInterceptor().apply {
+
+	private fun client(): OkHttpClient {
+		val interceptor = HttpLoggingInterceptor().apply {
 			level = HttpLoggingInterceptor.Level.BODY
-		}).build()
+		}
+
+		return OkHttpClient.Builder()
+			.connectTimeout(120, TimeUnit.SECONDS)
+			.readTimeout(120, TimeUnit.SECONDS)
+			.addInterceptor(interceptor)
+			.addInterceptor { chain ->
+				val original = chain.request()
+				val requestBuilder = original.newBuilder()
+					.header("Authorization", "Bearer ${tokenManager.getToken()}")
+				val request = requestBuilder.build()
+				chain.proceed(request)
+			}
+			.build()
+	}
 
 	fun gson(): Gson = GsonBuilder().create()
 
 
 	private val retrofitFactory =
 		Retrofit.Builder().baseUrl(baseUrl).client(client())
-			.addConverterFactory(GsonConverterFactory.create(gson()))
+			.addConverterFactory(GsonConverterFactory.create())
 			.build()
 
 
@@ -37,12 +52,7 @@ class RetrofitFactory {
 		return retrofitFactory.create(AuthService::class.java)
 	}
 
-	// HomeScreen and VideoDetailScreen
-
-
-	fun getCategoryService(): CategoryService {
-		return retrofitFactory.create(CategoryService::class.java)
-	}
+	// HomeScreen
 
 
 	fun getCourseService(): CourseService {
@@ -50,10 +60,7 @@ class RetrofitFactory {
 	}
 
 
-	//VideoPlayer as well
-	fun getVideoService(): VideoService {
-		return retrofitFactory.create(VideoService::class.java)
-	}
+
 
 
 }
