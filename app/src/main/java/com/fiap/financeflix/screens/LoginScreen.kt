@@ -99,6 +99,8 @@ fun LoginScreen(loginScreenViewModel: LoginScreenViewModel, navController: NavCo
 		) {
 
 
+
+
 			InputTextComponent(
 				value = emailState,
 				label = stringResource(id = R.string.text_label_email),

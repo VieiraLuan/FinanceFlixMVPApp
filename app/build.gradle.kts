@@ -82,6 +82,7 @@ dependencies {
 	//API
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
+	//Video Player 
 	implementation ("com.google.android.exoplayer:exoplayer:2.19.0")
 
 }
