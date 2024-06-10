@@ -14,7 +14,7 @@ class RetrofitFactory(private val context: Context) {
 
 	private val tokenManager = TokenManager(context)
 
-	val baseUrl: String = "https://financeflix-dev.azurewebsites.net/"
+	val baseUrl: String = "https://financeflix-dsv.azurewebsites.net/"
 
 
 	private fun client(): OkHttpClient {

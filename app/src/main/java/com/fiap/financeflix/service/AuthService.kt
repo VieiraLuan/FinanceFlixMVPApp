@@ -10,7 +10,7 @@ interface AuthService {
 
 
 
-	@POST("api/v1/Usuario/Login")
+	@POST("api/v1/Usuario/login")
 	fun postLogin(@Body requestBody: RequestBody): Call<ResponseBody>
 
 
